@@ -1,0 +1,19 @@
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/jec\/Sites\/theItalianTest\/source\/dev\/_boxsizing\.scss}line{font-family:\000031}}
+* { -webkit-box-sizing: border-box; -moz-box-sizing: border-box; box-sizing: border-box; }
+
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/jec\/Sites\/theItalianTest\/source\/dev\/style\.scss}line{font-family:\000033}}
+body { background: #fdfdfd; }
+
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/jec\/Sites\/theItalianTest\/source\/dev\/style\.scss}line{font-family:\000036}}
+.form-group-mini { width: 50%; float: left; padding: 0 10px; }
+
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/jec\/Sites\/theItalianTest\/source\/dev\/style\.scss}line{font-family:\0000311}}
+.form-group-mini:first-child { padding-left: 0; }
+
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/jec\/Sites\/theItalianTest\/source\/dev\/style\.scss}line{font-family:\0000314}}
+.form-group-mini:last-child { padding-right: 0; }
+
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/jec\/Sites\/theItalianTest\/source\/dev\/style\.scss}line{font-family:\0000317}}
+.input-group-addon { min-width: 150px; }
+
+/*# sourceMappingURL=style.css.map */

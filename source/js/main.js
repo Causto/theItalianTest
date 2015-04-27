@@ -77,6 +77,10 @@ function isEmpty(e) {
 
 }
 
+function expiryDate(){
+	/*todayDayIsnotValid*/
+}
+
 cardInput.addEventListener('paste', pasteString, false);
 cardInput.addEventListener('keyup', enterKey, false);
 

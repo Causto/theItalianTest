@@ -1,7 +1,7 @@
 {
 "version": 3,
-"mappings": ";AAAA,CAAE,GACA,kBAAkB,EAAE,UAAU,EAC9B,eAAe,EAAE,UAAU,EAC3B,UAAU,EAAE,UAAU;;;ACgBxB,MAAM,GACL,MAAM,EAAE,iBAAiB,EACzB,gBAAgB,EAAE,OAAO",
-"sources": ["file:///Users/jeromecauwe/Sites/theItalianTest/source/dev/_boxsizing.scss","file:///Users/jeromecauwe/Sites/theItalianTest/source/dev/style.scss"],
+"mappings": ";AAAA,CAAE,GACA,kBAAkB,EAAE,UAAU,EAC9B,eAAe,EAAE,UAAU,EAC3B,UAAU,EAAE,UAAU;;;ACHxB,MAAM,GACL,MAAM,EAAE,iBAAoB,EAC5B,gBAAgB,ECDH,OAAO;;;ADIrB,YAAY,GACX,YAAY,ECNC,OAAO,EDOpB,gBAAgB,ECLE,OAAO;;;ADQ1B,UAAU,GACT,YAAY,ECPF,OAAO,EDQjB,gBAAgB,ECNA,OAAO;;;ADSxB,QAAQ,GACP,QAAQ,EAAE,QAAQ;;;AAEnB,aAAa,GACZ,QAAQ,EAAE,QAAQ,EAClB,GAAG,EAAE,CAAC,EACN,KAAK,EAAE,CAAC,EACR,KAAK,EClBK,OAAO;;;ADoBlB,gBAAgB,GACf,QAAQ,EAAE,QAAQ,EAClB,GAAG,EAAE,CAAC,EACN,KAAK,EAAE,CAAC,EACR,KAAK,EC5BQ,OAAO",
+"sources": ["file:///Users/jec/Sites/theItalianTest/source/dev/_boxsizing.scss","file:///Users/jec/Sites/theItalianTest/source/dev/_global.scss","file:///Users/jec/Sites/theItalianTest/source/dev/_variables.scss"],
 "names": [],
 "file": "style.css"
 }

@@ -1,17 +1,55 @@
+var cardInput = el('.card'),
+    dateCard = el('.dateClientCard');
+
+/***********************************/
+/************* Helpers *************/
+/***********************************/
+
 function el(element) {
     return document.querySelector(element);
 }
 
-var cardInput = el('.card');
-
-function pasteString(e) {
-
-    console.log('yesMotherF*');
-    e.preventDefault();
+function messageToCLient( parent, parentClass, message, childClass ) {
+    
+    var element = document.createElement('div');
+    element.classList.add(childClass);
+    parent.appendChild(element);
+    parent.classList.add(parentClass);
+    element.innerHTML = message;
 
 }
 
-function enterKey() {
+/***********************************/
+/********* Luhn Algorithm **********/
+/***********************************/
+
+var validateCC = (function (arr) {
+    return function (ccNum) {
+        var
+            len = ccNum.length,
+            bit = 1,
+            sum = 0,
+            val;
+
+        while (len) {
+            val = parseInt(ccNum.charAt(--len), 10);
+            sum += (bit ^= 1) ? arr[val] : val;
+        }
+
+        return sum && sum % 10 === 0;
+    };
+}([0, 2, 4, 6, 8, 1, 3, 5, 7, 9]));
+
+
+
+function pasteString(e) {
+
+    e.preventDefault();
+    /*modal */
+}
+
+
+function enterKey(e) {
 
     var _inputcontent = cardInput.value,
         _firstnumber = _inputcontent.charAt( 0 ),
@@ -20,7 +58,8 @@ function enterKey() {
 
     if ( _notANumber ) {
 
-        cardInput.value = _inputcontent.substring( 0, _inputcontent.length - 1 );
+       cardInput.value = _inputcontent.substring( 0, _inputcontent.length - 1 );
+        e.stopPropagation();
 
     } else if ( _firstnumber != 3 && _firstnumber != 4 && _firstnumber != 5) {
 
@@ -33,7 +72,7 @@ function enterKey() {
             _mastercard = 'Master Card',
             _americanExp = 'American Express';
 
-        if ( _inputcontent.charAt( 0 ) == 4 && _inputcontent.length == 13 ) {
+        if ( _inputcontent.charAt( 0 ) == 4 && _inputcontent.length == 16 ) {
 
             _buttonName.classList.add('valid');
             _buttonName.innerHTML = _visa;
@@ -59,29 +98,76 @@ function enterKey() {
 
 }
 
+function cardValidity(e) {
+
+    e.preventDefault();
+
+    var _inputcontent = cardInput.value;
+    var result = validateCC(_inputcontent);
+    console.log(result);
+
+}
+
 function isEmpty(e) {
 
     e.preventDefault();
 
     var inputs = document.querySelectorAll('.form-control');
+    inputs.classList.remove('redBorder greenBorder');
 
     for (var i = 0; i < inputs.length; i++) {
 
         if ( inputs[i].value == '' || null ) {
-            console.log('un champ est vide');
+            inputs[i].classList.add('redBorder');
+        } else {
+            inputs[i].classList.add('greenBorder');
         }
-        inputs[i];
-        
+
     }
 
+}
+
+function isValidDate(e){
+
+    e.preventDefault();
+
+    var now = new Date();
+    var month = now.getMonth() + 1;
+    var year = now.getFullYear();
+
+    month = month.toString();
+    year = year.toString().substring(2, 4);
+
+    var _dateValue = dateCard.value.replace(/ /g,''),
+        _cardValidity = _dateValue.split(/\D/),
+        _cardMonth = parseInt( _cardValidity[0] ),
+        _cardYear = _cardValidity[1];
+
+    if ( _cardValidity.length != 2 || _cardMonth > 12 || _cardYear < year || ( _cardMonth < month &&  _cardYear == year ) ) {
+
+        var parent = dateCard.parentElement,
+            message = 'Write the date as on your card please',
+            parentClass = 'addtext',
+            childClass = 'errorMessage';
+
+        messageToCLient(parent, parentClass, message, childClass);
+
+    } else {
+
+        var parent = dateCard.parentElement,
+            message = 'GOOD DATE BITCH',
+            parentClass = 'addtext',
+            childClass = 'wellDoneMessage';
+
+        messageToCLient(parent, parentClass, message, childClass);
+
+    }
 
 }
 
-function expiryDate(){
-	/*todayDayIsnotValid*/
-}
-
-cardInput.addEventListener('paste', pasteString, false);
+var allInputs = document.querySelectorAll('input');
+for (var i = 0; i < allInputs.length; i++) {
+    allInputs[i].addEventListener('paste', pasteString, false);
+};
 cardInput.addEventListener('keyup', enterKey, false);
-
-el('.btn').addEventListener('click', isEmpty, false);
+el('.btn').addEventListener('click', isValidDate, false);

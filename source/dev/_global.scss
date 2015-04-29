@@ -1,0 +1,30 @@
+.valid{
+	border: 2px solid $darkGreen;
+	background-color: $lightGreen;
+}
+
+.greenBorder{
+	border-color: $darkGreen;
+	background-color: $superLightGreen;
+}
+
+.redBorder{
+	border-color: $darkRed;
+	background-color: $superLightRed;
+}
+
+.addtext{
+	position: relative;
+}
+.errorMessage{
+	position: absolute;
+	top: 0;
+	right: 0;
+	color: $darkRed;
+}
+.wellDoneMessage{
+	position: absolute;
+	top: 0;
+	right: 0;
+	color: $darkGreen;
+}

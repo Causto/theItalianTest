@@ -1,30 +1,34 @@
 .valid{
-	border: 2px solid $darkGreen;
-	background-color: $lightGreen;
+    border: 2px solid $darkGreen;
+    background-color: $lightGreen;
 }
 
 .greenBorder{
-	border-color: $darkGreen;
-	background-color: $superLightGreen;
+    border-color: $darkGreen;
+    background-color: $superLightGreen;
 }
 
 .redBorder{
-	border-color: $darkRed;
-	background-color: $superLightRed;
+    border-color: $darkRed;
+    background-color: $superLightRed;
 }
 
 .addtext{
-	position: relative;
+    position: relative;
 }
-.errorMessage{
-	position: absolute;
-	top: 0;
-	right: 0;
-	color: $darkRed;
+.errorMessage, .wellDoneMessage {
+    position: absolute;
+    width: 100%;
+    top: 50%;
+    left: 110%;
+
+    @include translate(0, -50%);
+
 }
-.wellDoneMessage{
-	position: absolute;
-	top: 0;
-	right: 0;
-	color: $darkGreen;
+.errorMessage {
+    color: $darkRed;
 }
+.wellDoneMessage {
+    color: $darkGreen;
+}
+

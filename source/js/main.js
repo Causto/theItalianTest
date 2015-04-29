@@ -10,9 +10,12 @@ function el(element) {
 }
 
 function messageToCLient( parent, parentClass, message, childClass ) {
+
+	document.querySelector('.tempDialog') ? document.querySelector('.tempDialog').remove() : console.log('nope');
     
     var element = document.createElement('div');
-    element.classList.add(childClass);
+    element.className += childClass;
+    element.className += ' tempDialog';
     parent.appendChild(element);
     parent.classList.add(parentClass);
     element.innerHTML = message;

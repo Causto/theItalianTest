@@ -1,5 +1,9 @@
 var cardInput = el('.card'),
-    dateCard = el('.dateClientCard');
+    inputs = document.querySelectorAll('.form-control'),
+    cvvInput = el('.cvv'),
+    dateCard = el('.dateClientCard'),
+    cvvValue,
+    element;
 
 /***********************************/
 /************* Helpers *************/
@@ -10,158 +14,188 @@ function el(element) {
 }
 
 function messageToCLient( parent, parentClass, message, childClass ) {
-    
-    var element = document.createElement('div');
-    element.classList.add(childClass);
+
+    console.log(el('.tempDialog'));
+
+    el('.tempDialog') ? el('.tempDialog').parentNode.removeChild( el('.tempDialog') ) : element = document.createElement('div');
+
+    element.className = ' tempDialog ';
+    element.className += childClass;
+
     parent.appendChild(element);
     parent.classList.add(parentClass);
+
     element.innerHTML = message;
 
 }
-
-/***********************************/
-/********* Luhn Algorithm **********/
-/***********************************/
-
-var validateCC = (function (arr) {
-    return function (ccNum) {
-        var
-            len = ccNum.length,
-            bit = 1,
-            sum = 0,
-            val;
-
-        while (len) {
-            val = parseInt(ccNum.charAt(--len), 10);
-            sum += (bit ^= 1) ? arr[val] : val;
-        }
-
-        return sum && sum % 10 === 0;
-    };
-}([0, 2, 4, 6, 8, 1, 3, 5, 7, 9]));
-
-
 
 function pasteString(e) {
 
     e.preventDefault();
     /*modal */
+
 }
 
+var deleteNaN = function( field ) {
 
-function enterKey(e) {
+    var fieldValue = field.value,
+        _notANumber = isNaN( fieldValue );
+    
+    if ( _notANumber ) { 
 
-    var _inputcontent = cardInput.value,
-        _firstnumber = _inputcontent.charAt( 0 ),
-        _secondNumber = _inputcontent.charAt( 1 ),
-        _notANumber = isNaN( _inputcontent );
+        fieldValue = fieldValue.substring( 0, fieldValue.length - 1 );
+    }
 
-    if ( _notANumber ) {
+    field.value = fieldValue;
+}
 
-       cardInput.value = _inputcontent.substring( 0, _inputcontent.length - 1 );
-        e.stopPropagation();
+function checkingCardNumber( field ) {
 
-    } else if ( _firstnumber != 3 && _firstnumber != 4 && _firstnumber != 5) {
+    var val = field.value,
+        _firstnumber = val.charAt( 0 ),
+        _secondNumber = val.charAt( 1 );
+        _buttonName = el('.input-group-addon'),
+        _visa = 'visa',
+        _mastercard = 'Master Card',
+        _americanExp = 'American Express';
 
-        console.log('not a valid start');
+    if ( _firstnumber == 4 && val.length == 16 ) {
+
+        _buttonName.classList.add('valid');
+        _buttonName.innerHTML = _visa;
+        cvvValue = 0;
+
+    } else if ( _firstnumber == 5 && val.length == 16) {
+
+        _buttonName.classList.add('valid');
+        _buttonName.innerHTML = _mastercard;
+        cvvValue = 0;
+
+    } else if ( _firstnumber == 3 && ( _secondNumber == 4 || _secondNumber == 7 ) && val.length == 15) {
+
+        _buttonName.classList.add('valid');
+        _buttonName.innerHTML = _americanExp;
+        cvvValue = 1;
 
     } else {
 
-        var _buttonName = el('.input-group-addon'),
-            _visa = 'visa',
-            _mastercard = 'Master Card',
-            _americanExp = 'American Express';
-
-        if ( _inputcontent.charAt( 0 ) == 4 && _inputcontent.length == 16 ) {
-
-            _buttonName.classList.add('valid');
-            _buttonName.innerHTML = _visa;
-
-        } else if ( _inputcontent.charAt( 0 ) == 5 && _inputcontent.length == 16) {
-
-            _buttonName.classList.add('valid');
-            _buttonName.innerHTML = _mastercard;
-
-        } else if ( _inputcontent.charAt( 0 ) == 3 && ( _secondNumber == 4 || _secondNumber == 7 ) && _inputcontent.length == 15) {
-
-            _buttonName.classList.add('valid');
-            _buttonName.innerHTML = _americanExp;
-
-        } else {
-
-            _buttonName.classList.remove('valid');
-            _buttonName.innerHTML = '';
-
-        }
+        _buttonName.classList.remove('valid');
+        _buttonName.innerHTML = 'what a card ?';
 
     }
 
 }
 
-function cardValidity(e) {
+var isCardNumberValid = function (cardNo){
 
-    e.preventDefault();
+    var validateCC = (function (arr) {
+        
+        return function (ccNum) {
+            var
+                len = ccNum.length,
+                bit = 1,
+                sum = 0,
+                val;
+            while (len) {
+                val = parseInt(ccNum.charAt(--len), 10);
+                sum += (bit ^= 1) ? arr[val] : val;
+            }
+            return sum && sum % 10 === 0;
+        };
+    }([0, 2, 4, 6, 8, 1, 3, 5, 7, 9]));
 
-    var _inputcontent = cardInput.value;
-    var result = validateCC(_inputcontent);
-    console.log(result);
+    return validateCC(cardNo);
 
-}
+};
 
-function isEmpty(e) {
-
-    e.preventDefault();
-
-    var inputs = document.querySelectorAll('.form-control');
-    inputs.classList.remove('redBorder greenBorder');
-
-    for (var i = 0; i < inputs.length; i++) {
-
-        if ( inputs[i].value == '' || null ) {
-            inputs[i].classList.add('redBorder');
-        } else {
-            inputs[i].classList.add('greenBorder');
-        }
-
-    }
-
-}
-
-function isValidDate(e){
-
-    e.preventDefault();
+function isValidDate(){
 
     var now = new Date();
     var month = now.getMonth() + 1;
     var year = now.getFullYear();
+    var limitYear = now.getFullYear() + 4;
 
     month = month.toString();
     year = year.toString().substring(2, 4);
+    limitYear = limitYear.toString().substring(2, 4);
 
-    var _dateValue = dateCard.value.replace(/ /g,''),
+    var _dateValue = dateCard.value.replace(/\s/g,''),
         _cardValidity = _dateValue.split(/\D/),
         _cardMonth = parseInt( _cardValidity[0] ),
-        _cardYear = _cardValidity[1];
+        _cardYear = _cardValidity[1],
+        parent = dateCard.parentElement,
+        parentClass = 'addtext';
 
-    if ( _cardValidity.length != 2 || _cardMonth > 12 || _cardYear < year || ( _cardMonth < month &&  _cardYear == year ) ) {
+    dateCard.value = _dateValue;
 
-        var parent = dateCard.parentElement,
-            message = 'Write the date as on your card please',
-            parentClass = 'addtext',
+    if ( _cardValidity[0] == '' ){
+
+        console.log('mmh');
+
+    } else if ( _cardValidity.length != 2 || _cardMonth > 12 || _cardYear < year || ( _cardMonth < month &&  _cardYear == year || _cardYear > limitYear ) ) {
+
+        var message = 'Write the date as on your card please',
             childClass = 'errorMessage';
 
+        dateCard.classList.add('redBorder');
         messageToCLient(parent, parentClass, message, childClass);
+
 
     } else {
 
-        var parent = dateCard.parentElement,
-            message = 'GOOD DATE BITCH',
-            parentClass = 'addtext',
+        var message = 'Seems Good dawg',
             childClass = 'wellDoneMessage';
 
+        dateCard.classList.add('greenBorder');
         messageToCLient(parent, parentClass, message, childClass);
 
+
     }
+
+}
+
+var checkingCVV = function() {
+
+    deleteNaN( cvvInput );
+
+    switch (cvvValue) {
+        case 0:
+            _fieldValue.length == 3 ? console.log('good') : console.log('wrong');
+            breaks;
+        case 1:
+            _fieldValue.length == 4 ? console.log('good') : console.log('wrong');
+            breaks;
+        default:
+            console.log('this isn\'t correct');
+    }
+
+}
+
+function isEmpty( fields ) {
+
+    for (var i = 0; i < fields.length; i++) {
+
+        if ( fields[i].classList.contains('redBorder') ) {
+            fields[i].classList.remove('redBorder');
+        }
+
+        if ( fields[i].value == '' || null ) {
+
+            fields[i].classList.add('redBorder');
+
+        }
+
+    }
+
+}
+
+function checkingOnSubmit(e) {
+
+    e.preventDefault();
+
+    isCardNumberValid();
+    isValidDate();
+    isEmpty( inputs );
 
 }
 
@@ -169,5 +203,14 @@ var allInputs = document.querySelectorAll('input');
 for (var i = 0; i < allInputs.length; i++) {
     allInputs[i].addEventListener('paste', pasteString, false);
 };
-cardInput.addEventListener('keyup', enterKey, false);
-el('.btn').addEventListener('click', isValidDate, false);
+
+cardInput.addEventListener('keyup', function(){
+    deleteNaN( this );
+    checkingCardNumber( this );
+}, false);
+
+cvvInput.addEventListener('keyup', checkingCVV, false);
+
+el('.btn').addEventListener('click', checkingOnSubmit, false);
+
+

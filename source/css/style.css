@@ -1,22 +1,22 @@
-@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/jec\/Sites\/theItalianTest\/source\/dev\/_boxsizing\.scss}line{font-family:\000031}}
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/jec\/Sites\/_test\/theItalianTest\/source\/dev\/_boxsizing\.scss}line{font-family:\000031}}
 * { -webkit-box-sizing: border-box; -moz-box-sizing: border-box; box-sizing: border-box; }
 
-@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/jec\/Sites\/theItalianTest\/source\/dev\/_global\.scss}line{font-family:\000031}}
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/jec\/Sites\/_test\/theItalianTest\/source\/dev\/_global\.scss}line{font-family:\000031}}
 .valid { border: 2px solid #139702; background-color: #77DC7E; }
 
-@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/jec\/Sites\/theItalianTest\/source\/dev\/_global\.scss}line{font-family:\000036}}
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/jec\/Sites\/_test\/theItalianTest\/source\/dev\/_global\.scss}line{font-family:\000036}}
 .greenBorder { border-color: #139702; background-color: #CEF6C8; }
 
-@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/jec\/Sites\/theItalianTest\/source\/dev\/_global\.scss}line{font-family:\0000311}}
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/jec\/Sites\/_test\/theItalianTest\/source\/dev\/_global\.scss}line{font-family:\0000311}}
 .redBorder { border-color: #B50008; background-color: #FECACC; }
 
-@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/jec\/Sites\/theItalianTest\/source\/dev\/_global\.scss}line{font-family:\0000316}}
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/jec\/Sites\/_test\/theItalianTest\/source\/dev\/_global\.scss}line{font-family:\0000316}}
 .addtext { position: relative; }
 
-@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/jec\/Sites\/theItalianTest\/source\/dev\/_global\.scss}line{font-family:\0000319}}
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/jec\/Sites\/_test\/theItalianTest\/source\/dev\/_global\.scss}line{font-family:\0000319}}
 .errorMessage { position: absolute; top: 0; right: 0; color: #B50008; }
 
-@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/jec\/Sites\/theItalianTest\/source\/dev\/_global\.scss}line{font-family:\0000325}}
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/jec\/Sites\/_test\/theItalianTest\/source\/dev\/_global\.scss}line{font-family:\0000325}}
 .wellDoneMessage { position: absolute; top: 0; right: 0; color: #139702; }
 
 /*# sourceMappingURL=style.css.map */

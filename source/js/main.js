@@ -10,12 +10,20 @@ var cardInput = el('.card'),
 /***********************************/
 
 function el(element) {
+
     return document.querySelector(element);
+
+}
+
+/* get value from selected input */
+var getFieldValue = function( input ){
+
+    var _val = input.value;
+    return _val;
+
 }
 
 function messageToCLient( parent, parentClass, message, childClass ) {
-
-    console.log(el('.tempDialog'));
 
     el('.tempDialog') ? el('.tempDialog').parentNode.removeChild( el('.tempDialog') ) : element = document.createElement('div');
 
@@ -38,49 +46,65 @@ function pasteString(e) {
 
 var deleteNaN = function( field ) {
 
-    var fieldValue = field.value,
-        _notANumber = isNaN( fieldValue );
-    
-    if ( _notANumber ) { 
+    var _fieldValue = getFieldValue( field ),
+        _notANumber = isNaN( _fieldValue );
 
-        fieldValue = fieldValue.substring( 0, fieldValue.length - 1 );
+    if ( _notANumber ) {
+
+        _fieldValue = _fieldValue.substring( 0, _fieldValue.length - 1 );
+
     }
 
-    field.value = fieldValue;
+    field.value = _fieldValue;
 }
 
-function checkingCardNumber( field ) {
+var cardType = function( input ) {
 
-    var val = field.value,
-        _firstnumber = val.charAt( 0 ),
-        _secondNumber = val.charAt( 1 );
-        _buttonName = el('.input-group-addon'),
-        _visa = 'visa',
-        _mastercard = 'Master Card',
-        _americanExp = 'American Express';
+    console.log( input.value );
 
-    if ( _firstnumber == 4 && val.length == 16 ) {
+    var _val = getFieldValue( input ),
+        _firstnumber = _val.charAt( 0 ),
+        _secondNumber = _val.charAt( 1 ),
+        _cardType;
 
-        _buttonName.classList.add('valid');
-        _buttonName.innerHTML = _visa;
+    if ( _firstnumber == 4 && _val.length == 16 ) {
+
+        _cardType = 'Visa';
         cvvValue = 0;
 
-    } else if ( _firstnumber == 5 && val.length == 16) {
+    } else if ( _firstnumber == 5 && _val.length == 16) {
 
-        _buttonName.classList.add('valid');
-        _buttonName.innerHTML = _mastercard;
+        _cardType = 'Mastercard';
         cvvValue = 0;
 
-    } else if ( _firstnumber == 3 && ( _secondNumber == 4 || _secondNumber == 7 ) && val.length == 15) {
+    } else if ( _firstnumber == 3 && ( _secondNumber == 4 || _secondNumber == 7 ) && _val.length == 15) {
 
-        _buttonName.classList.add('valid');
-        _buttonName.innerHTML = _americanExp;
+        _cardType = 'American Express'
         cvvValue = 1;
 
     } else {
 
+        _cardType = '';
+
+    }
+
+    return _cardType;
+
+}
+
+var printCardType = function( resultCardType ) {
+
+    var _buttonName = el('.input-group-addon');
+
+    if ( resultCardType ) {
+
+        _buttonName.classList.add('valid');
+        _buttonName.innerHTML = resultCardType;
+
+    } else {
+
         _buttonName.classList.remove('valid');
-        _buttonName.innerHTML = 'what a card ?';
+        _buttonName.innerHTML = '';
 
     }
 
@@ -89,7 +113,7 @@ function checkingCardNumber( field ) {
 var isCardNumberValid = function (cardNo){
 
     var validateCC = (function (arr) {
-        
+
         return function (ccNum) {
             var
                 len = ccNum.length,
@@ -108,7 +132,7 @@ var isCardNumberValid = function (cardNo){
 
 };
 
-function isValidDate(){
+var isValidDate = function(){
 
     var now = new Date();
     var month = now.getMonth() + 1;
@@ -149,16 +173,13 @@ function isValidDate(){
         dateCard.classList.add('greenBorder');
         messageToCLient(parent, parentClass, message, childClass);
 
-
     }
 
 }
 
-var checkingCVV = function() {
+var cvvValue = function( input ) {
 
-    deleteNaN( cvvInput );
-
-    switch (cvvValue) {
+    switch ( input.value ) {
         case 0:
             _fieldValue.length == 3 ? console.log('good') : console.log('wrong');
             breaks;
@@ -171,7 +192,7 @@ var checkingCVV = function() {
 
 }
 
-function isEmpty( fields ) {
+var isEmpty = function( fields ) {
 
     for (var i = 0; i < fields.length; i++) {
 
@@ -189,7 +210,7 @@ function isEmpty( fields ) {
 
 }
 
-function checkingOnSubmit(e) {
+var checkingOnSubmit = function(e) {
 
     e.preventDefault();
 
@@ -200,16 +221,28 @@ function checkingOnSubmit(e) {
 }
 
 var allInputs = document.querySelectorAll('input');
+
 for (var i = 0; i < allInputs.length; i++) {
+
     allInputs[i].addEventListener('paste', pasteString, false);
+
 };
 
 cardInput.addEventListener('keyup', function(){
+
     deleteNaN( this );
-    checkingCardNumber( this );
+    var _cardType = cardType( this );
+    printCardType( _cardType );
+
+
 }, false);
 
-cvvInput.addEventListener('keyup', checkingCVV, false);
+cvvInput.addEventListener('keyup', function() {
+
+    deleteNaN( cvvInput );
+    cvvValue( this );
+
+}, false);
 
 el('.btn').addEventListener('click', checkingOnSubmit, false);
 

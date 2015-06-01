@@ -1,4 +1,4 @@
-var cardInput = el('.card'),
+var cardNumInput = el('.card'),
     inputs = document.querySelectorAll('.form-control'),
     cvvInput = el('.cvv'),
     dateCard = el('.dateClientCard'),
@@ -56,6 +56,7 @@ var deleteNaN = function( field ) {
     }
 
     field.value = _fieldValue;
+
 }
 
 var cardType = function( input ) {
@@ -108,27 +109,35 @@ var printCardType = function( resultCardType ) {
 
     }
 
+    return cvvValue;
+
 }
 
-var isCardNumberValid = function (cardNo){
+var isCardNumberValid = function ( cardNu ){
 
     var validateCC = (function (arr) {
 
         return function (ccNum) {
+
             var
                 len = ccNum.length,
                 bit = 1,
                 sum = 0,
                 val;
             while (len) {
+
                 val = parseInt(ccNum.charAt(--len), 10);
                 sum += (bit ^= 1) ? arr[val] : val;
+
             }
+
             return sum && sum % 10 === 0;
+
         };
+
     }([0, 2, 4, 6, 8, 1, 3, 5, 7, 9]));
 
-    return validateCC(cardNo);
+    return validateCC( cardNu );
 
 };
 
@@ -188,6 +197,7 @@ var cvvValue = function( input ) {
             breaks;
         default:
             console.log('this isn\'t correct');
+
     }
 
 }

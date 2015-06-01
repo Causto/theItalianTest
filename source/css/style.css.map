@@ -1,7 +1,12 @@
 {
 "version": 3,
+<<<<<<< HEAD
 "mappings": ";AAAA,CAAE,GACA,kBAAkB,EAAE,UAAU,EAC9B,eAAe,EAAE,UAAU,EAC3B,UAAU,EAAE,UAAU;;;ACHxB,MAAM,GACL,MAAM,EAAE,iBAAoB,EAC5B,gBAAgB,ECDH,OAAO;;;ADIrB,YAAY,GACX,YAAY,ECNC,OAAO,EDOpB,gBAAgB,ECLE,OAAO;;;ADQ1B,UAAU,GACT,YAAY,ECPF,OAAO,EDQjB,gBAAgB,ECNA,OAAO;;;ADSxB,QAAQ,GACP,QAAQ,EAAE,QAAQ;;;AAEnB,aAAa,GACZ,QAAQ,EAAE,QAAQ,EAClB,GAAG,EAAE,CAAC,EACN,KAAK,EAAE,CAAC,EACR,KAAK,EClBK,OAAO;;;ADoBlB,gBAAgB,GACf,QAAQ,EAAE,QAAQ,EAClB,GAAG,EAAE,CAAC,EACN,KAAK,EAAE,CAAC,EACR,KAAK,EC5BQ,OAAO",
 "sources": ["file:///Users/jec/Sites/_test/theItalianTest/source/dev/_boxsizing.scss","file:///Users/jec/Sites/_test/theItalianTest/source/dev/_global.scss","file:///Users/jec/Sites/_test/theItalianTest/source/dev/_variables.scss"],
+=======
+"mappings": ";AAAA,CAAE,GACA,kBAAkB,EAAE,UAAU,EAC9B,eAAe,EAAE,UAAU,EAC3B,UAAU,EAAE,UAAU;;;ACHxB,MAAM,GACF,MAAM,EAAE,iBAAoB,EAC5B,gBAAgB,ECDN,OAAO;;;ADIrB,YAAY,GACR,YAAY,ECNF,OAAO,EDOjB,gBAAgB,ECLD,OAAO;;;ADQ1B,UAAU,GACN,YAAY,ECPL,OAAO,EDQd,gBAAgB,ECNH,OAAO;;;ADSxB,QAAQ,GACJ,QAAQ,EAAE,QAAQ;;;AAEtB,+BAAgC,GAC5B,QAAQ,EAAE,QAAQ,EAClB,KAAK,EAAE,IAAI,EACX,GAAG,EAAE,GAAG,EACR,IAAI,EAAE,IAAI,EErBV,iBAAiB,EAAE,kBAAiB,EACjC,cAAc,EAAE,kBAAiB,EAChC,aAAa,EAAE,kBAAiB,EAC/B,YAAY,EAAE,kBAAiB,EAC5B,SAAS,EAAE,kBAAiB;;;AFsBxC,aAAc,GACV,KAAK,ECxBE,OAAO;;;AD0BlB,gBAAiB,GACb,KAAK,EC/BK,OAAO",
+"sources": ["file:///Users/jeromecauwe/Sites/theItalianTest/source/dev/_boxsizing.scss","file:///Users/jeromecauwe/Sites/theItalianTest/source/dev/_global.scss","file:///Users/jeromecauwe/Sites/theItalianTest/source/dev/_variables.scss","file:///Users/jeromecauwe/Sites/theItalianTest/source/dev/_mixin.scss"],
+>>>>>>> 142982c5e814fa6c6de4f6488b62ca018cf588e1
 "names": [],
 "file": "style.css"
 }

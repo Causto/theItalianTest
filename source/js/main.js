@@ -1,14 +1,11 @@
-var cardNumInput = el('.card'),
-    inputs = document.querySelectorAll('.form-control'),
-    cvvInput = el('.cvv'),
-    dateCard = el('.dateClientCard'),
-    response = response || {};
+var response = response || {},
+    allInputs = document.querySelectorAll('input');
 
 /***********************************/
 /************* Helpers *************/
 /***********************************/
 
-function el(element) {
+var el = function(element) {
 
     return document.querySelector(element);
 
@@ -21,6 +18,10 @@ var getValue = function( input ){
     return _val;
 
 }
+
+/***********************************/
+/********** main Function **********/
+/***********************************/
 
 var messageToCLient = function( parent, parentClass, message, childClass ) {
 
@@ -69,29 +70,28 @@ var cardType = function( input ) {
     if ( _firstnumber == 4 && _cardVal.length == 16 ) {
 
         _cardType = 'Visa';
-        _cvvType = 0;
+        _cvvType = '0';
 
     } else if ( _firstnumber == 5 && _cardVal.length == 16) {
 
         _cardType = 'Mastercard';
-        _cvvType = 0;
+        _cvvType = '0';
 
     } else if ( _firstnumber == 3 && ( _secondNumber == 4 || _secondNumber == 7 ) && _cardVal.length == 15) {
 
         _cardType = 'American Express'
-        _cvvType = 1;
+        _cvvType = '1';
 
     } else {
 
-        _cardType = '';
+        _cardType = '?';
         _cvvType = '';
 
     }
 
-    response.card = _cardType;
+    response.cardType = _cardType;
     response.cvvType = _cvvType;
-
-    response.card.length > 0 ? response.cardNumber = _cardVal : response.cardNumber = '';
+    response.card = ( response.cardType.length > 0 ) ? _cardVal : '';
 
 }
 
@@ -99,17 +99,7 @@ var printCardType = function( resultCardType ) {
 
     var _buttonName = el('.input-group-addon');
 
-    if ( resultCardType ) {
-
-        _buttonName.classList.add('valid');
-        _buttonName.innerHTML = resultCardType;
-
-    } else {
-
-        _buttonName.classList.remove('valid');
-        _buttonName.innerHTML = '';
-
-    }
+    _buttonName.innerHTML = ( response.cardType ) ? response.cardType : '?';
 
 }
 
@@ -171,23 +161,25 @@ var isValidDate = function( dateInput ){
 
 var isValidCvv = function( input ) {
 
-    _fieldValue = getValue( input );
+    var _val = getValue( input );
 
-    switch ( cvvValue ) {
+    switch ( response.cvvType ) {
 
-        case 0:
+        case '0':
 
-            _fieldValue.length == 3 ? response.cvvValue = _fieldValue : response.cvvValue = '';
+            response.cvv = ( _val.length == 3 ) ? _val : '';
 
             break;
 
-        case 1:
+        case '1':
 
-            _fieldValue.length == 4 ? response.cvvValue = _fieldValue : response.cvvValue = '';
+            response.cvv = ( _val.length == 4 ) ? _val : '';
 
             break;
 
         default:
+
+            response.cvv = '';
 
             return false;
 
@@ -199,75 +191,142 @@ var isValidCvv = function( input ) {
 
 var isPossibleName = function( input ) {
 
-    var _regex = /D/gi,
+    var _regex = /^[a-zA-ZÀ-ÿ\s]+$/,
         _val = getValue( input );
 
-        console.log(_val);
+    if ( _regex.test( _val ) ) {
 
-    if ( _regex.test( input ) ) {
+        _val = _val.toUpperCase();
+        _val = _val.split(/\s/g);
 
-        return true;
+        response.name = _val;
 
     } else {
 
-        return false;
+        response.name = '';
     }
 
 }
 
-var isEmpty = function( fields ) {
+var isEmpty = function( field, val ) {
 
-    for (var i = 0; i < fields.length; i++) {
+    if( !val ) {
 
-        if ( fields[i].classList.contains('redBorder') ) {
-            fields[i].classList.remove('redBorder');
-        }
+        if ( !field.classList.contains('error') ) {
 
-        if ( fields[i].value == '' || null ) {
-
-            fields[i].classList.add('redBorder');
+            field.classList.remove('true');
+            field.classList.add('error');
 
         }
 
+    } else {
+
+        if ( !field.classList.contains('true') ) {
+
+            field.classList.remove('error');
+            field.classList.add('true');
+
+        }
     }
-
 }
+
+/***********************************/
+/************ onsubmit *************/
+/***********************************/
 
 var checkingOnSubmit = function(e) {
 
+    var _val = false;
+
     e.preventDefault();
 
-    // isCardNumberValid( cardNumInput.value );
-    // console.log(isCardNumberValid( response.cardNumber ));
-    console.log( isPossibleName( el('.name') ) );
-    // isEmpty( inputs );
+    /* check all the inputs values => if empty */
+    for (var i = 0; i < allInputs.length; i++) {
 
+        var _i = allInputs[i];
+
+        if ( _i.value == '' ||  _i.value == null ) {
+
+            _val = false;
+
+            isEmpty( _i, _val );
+        }
+    }
+
+    /* check value in response object */
+    for ( var prop in response ) {
+
+        var _el = el( '.' + prop );
+
+        if ( _el ) {
+
+            if ( !response[prop] ) {
+
+                _val = false;
+
+                isEmpty( _el, _val  );
+
+            } else {
+
+                _val = true;
+
+                isEmpty( _el, _val );
+            }
+        }
+    }
 }
 
-var allInputs = document.querySelectorAll('input');
+/***********************************/
+/************ listeners ************/
+/***********************************/
 
 for (var i = 0; i < allInputs.length; i++) {
 
-    allInputs[i].addEventListener('paste', pasteString, false);
+    var _i = allInputs[i];
+
+    _i.addEventListener( 'paste', pasteString, false );
+
+    _i.addEventListener( 'keyup', function() {
+
+        if ( this.classList.contains('card') || this.classList.contains('cvv') ) {
+
+            deleteNaN( this );
+
+            if ( this.classList.contains('card') ) {
+
+                var _cardType = cardType( this );
+
+                printCardType( response.card );
+
+                if ( response.card.length > 0 ) {
+
+                    isCardNumberValid( response.card ) ? response.card = response.card : response.card = '';
+                }
+
+            } else {
+
+                isValidCvv( this );
+
+            }
+
+        }
+
+        if ( this.classList.contains('name') ) {
+
+            isPossibleName( this );
+
+        }
+
+        if ( this.classList.contains('date') ) {
+
+            isValidDate( this );
+
+        }
+
+    }, false );
 
 };
 
-cardNumInput.addEventListener('keyup', function(){
-
-    deleteNaN( this );
-    var _cardType = cardType( this );
-    printCardType( response.card );
-
-
-}, false);
-
-cvvInput.addEventListener('keyup', function() {
-
-    deleteNaN( cvvInput );
-    isValidCvv( this );
-
-}, false);
-
-el('.btn').addEventListener('click', checkingOnSubmit, false);
+el('.form').addEventListener('submit', checkingOnSubmit, false);
 
 

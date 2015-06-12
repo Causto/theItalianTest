@@ -1,17 +1,16 @@
-# theItalianTest
+# The italian test
 	
-	## credit card validation exercice.
+## Credit card validation exercice.
 
+### Start
 
-	### Start
+go to the main repository with your terminal and let's do those few steps : 
 
-	go to the main repository with your terminal and let's do those few steps : 
-		
-		* $ npm install || $ sudo npm install.
-		
-		<!-- when nodes_modules are ready -->
-		* $ grunt ( launch the default task from gruntFile.js ).
-	
-	the grunt task will create a "public" folder, this your view. You should work from the "source" folder.
+* $ npm install || $ sudo npm install.
 
-	you can work in the source folder.
+<!-- when nodes_modules are ready -->
+* $ grunt ( launch the default task from gruntFile.js ).
+
+the grunt task will create a "public" folder, this your view. You should work from the "source" folder.
+
+you can work in the source folder.

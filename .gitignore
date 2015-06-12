@@ -1,8 +1,8 @@
 
 *.scssc
 
-node_modules
-
 .sass-cache
 
 public
+
+node_modules

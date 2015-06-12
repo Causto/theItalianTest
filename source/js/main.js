@@ -23,24 +23,9 @@ var getValue = function( input ){
 /********** main Function **********/
 /***********************************/
 
-var messageToCLient = function( parent, parentClass, message, childClass ) {
-
-    el('.tempDialog') ? el('.tempDialog').parentNode.removeChild( el('.tempDialog') ) : element = document.createElement('div');
-
-    element.className = ' tempDialog ';
-    element.className += childClass;
-
-    parent.appendChild(element);
-    parent.classList.add(parentClass);
-
-    element.innerHTML = message;
-
-}
-
 var pasteString = function(e) {
 
     e.preventDefault();
-    /*modal */
 
 }
 
@@ -218,6 +203,9 @@ var isEmpty = function( field, val ) {
             field.classList.add('error');
 
         }
+
+        field.value = '';
+        field.setAttribute('placeholder', 'come on dude')
 
     } else {
 

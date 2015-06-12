@@ -13,6 +13,27 @@
     background-color: $lightRed;
 }
 
+.error::-webkit-input-placeholder{
+    color: $darkRed;
+    font-size: 0.8em;
+    text-indent: 0.8em;
+}
+.error::-moz-input-placeholder{
+    color: $darkRed;
+    font-size: 0.8em;
+    text-indent: 0.8em;
+}
+.error::-ms-input-placeholder{
+    color: $darkRed;
+    font-size: 0.8em;
+    text-indent: 0.8em;
+}
+.error::input-placeholder{
+    color: $darkRed;
+    font-size: 0.8em;
+    text-indent: 0.8em;
+}
+
 .addtext{
     position: relative;
 }

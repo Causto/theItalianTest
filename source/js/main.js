@@ -134,12 +134,10 @@
 
         if ( _cardValidity.length != 2 || _cardMonth > 12 || _cardYear < year || ( _cardMonth < month &&  _cardYear == year || _cardYear > limitYear ) ) {
 
-            /* not valid date */
             response.date = '';
 
         } else {
 
-            /* valid date */
             response.date = _dateValue;
 
         }

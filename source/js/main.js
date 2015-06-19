@@ -1,7 +1,6 @@
 ( function ( form, allInputs ) {
 
     var response = response || {};
-    // allInputs = document.querySelectorAll('input');
 
     /***********************************/
     /************* Helpers *************/
@@ -46,7 +45,7 @@
 
     }
 
-    var cardData = function( input ) {
+    var wichCardType = function( input ) {
 
         var _cardVal = getValue( input ),
             _firstnumber = _cardVal.charAt( 0 ),
@@ -54,37 +53,74 @@
             _cardType,
             _cvvType;
 
-        if ( _firstnumber == 4 && _cardVal.length == 16 ) {
+            switch ( _firstnumber ) {
 
-            _cardType = 'Visa';
-            _cvvType = '0';
+                case '4' :
 
-        } else if ( _firstnumber == 5 && _cardVal.length == 16) {
+                    _cardType = 'Visa';
+                    _cvvType = '0';
 
-            _cardType = 'Mastercard';
-            _cvvType = '0';
+                break;
 
-        } else if ( _firstnumber == 3 && ( _secondNumber == 4 || _secondNumber == 7 ) && _cardVal.length == 15) {
+                case '5' :
 
-            _cardType = 'American Express'
-            _cvvType = '1';
+                    _cardType = 'Mastercard';
+                    _cvvType = '0';
 
-        } else {
+                break;
 
-            _cardType = '?';
-            _cvvType = '';
+                case '3' :
+                default :
 
-        }
+                    if ( _secondNumber == 5 || _secondNumber == 7 ) {
+
+                        _cardType = 'American Express'
+                        _cvvType = '0';
+
+                    } else {
+
+                        _cardType = ''
+                        _cvvType = '';
+
+                    }
+
+                break;
+            }
 
         response.cardType = _cardType;
-        response.card = ( response.cardType ) ? _cardVal : '';
-        response.cvvType = ( !response.card ) ? _cvvType : '';
+        response.cvvType = ( response.cardType ) ? _cvvType : '';
 
     }
 
-    var printCardType = function( resultCardType ) {
+    var isGoodLength = function( cardType, input ) {
 
-        var _buttonName = el('.input-group-addon');
+        var _val = getValue( input ),
+            _length = _val.length;
+
+        switch( cardType ) {
+
+            case 'Visa' :
+                response.cardNumber = ( _length == 16 ) ? _val : '';
+            break;
+
+            case 'Mastercard' :
+                response.cardNumber = ( _length == 16 ) ? _val : '';
+            break;
+
+            case 'American Express' :
+                response.cardNumber = ( _length == 15 ) ? _val : '';
+            break;
+
+            default:
+                response.cardNumber = '';
+            break;
+        }
+
+    }
+
+    var printCardType = function( input ) {
+
+        var _buttonName = input;
 
         _buttonName.innerHTML = ( response.cardType ) ? response.cardType : '?';
 
@@ -282,21 +318,40 @@
 
                 if ( this.classList.contains('card') ) {
 
-                    var _cardType = cardData( this );
+                    var _cardType = wichCardType( this );
+                    isGoodLength( response.cardType, this );
+                    printCardType( el('.input-group-addon') );
 
-                    printCardType( response.card );
+                    if ( response.cardNumber ) {
 
-                    if ( response.card ) {
+                        response.cardNumber = ( isCardNumberValid( response.cardNumber ) ) ? response.cardNumber : '';
+                        response.cvv = ( response.cardNumber ) ? response.cvv : '';
 
-                        response.card = ( isCardNumberValid( response.card ) ) ? response.card : '';
-                        response.cvv = ( response.card ) ? response.cvv : '';
+                        if ( response.cardNumber ){
+
+                            if ( !el('.input-group-addon').classList.contains('true') ) {
+
+                                el('.input-group-addon').classList.add('true');
+
+                            }
+
+                        } else {
+
+                            if ( el('.input-group-addon').classList.contains('true') ) {
+
+                                el('.input-group-addon').classList.remove('true');
+
+                            }
+                        }
 
                     }
 
 
                 } else {
 
-                    isValidCvv( this );
+                    if( response.cvvType ) {
+                       isValidCvv( this );
+                    }
 
                 }
 

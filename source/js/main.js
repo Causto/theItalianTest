@@ -45,7 +45,7 @@
 
     }
 
-    var wichCardType = function( input ) {
+    var whichCardType = function( input ) {
 
         var _cardVal = getValue( input ),
             _firstnumber = _cardVal.charAt( 0 ),
@@ -100,19 +100,19 @@
         switch( cardType ) {
 
             case 'Visa' :
-                response.cardNumber = ( _length == 16 ) ? _val : '';
+                response.cardNumLen = ( _length == 16 ) ? true : false;
             break;
 
             case 'Mastercard' :
-                response.cardNumber = ( _length == 16 ) ? _val : '';
+                response.cardNumLen = ( _length == 16 ) ? true : false;
             break;
 
             case 'American Express' :
-                response.cardNumber = ( _length == 15 ) ? _val : '';
+                response.cardNumLen = ( _length == 15 ) ? true : false;
             break;
 
             default:
-                response.cardNumber = '';
+                response.cardNumLen = false;
             break;
         }
 
@@ -225,6 +225,7 @@
         } else {
 
             response.name = '';
+
         }
 
     }
@@ -312,19 +313,20 @@
 
         _i.addEventListener( 'keyup', function() {
 
-            if ( this.classList.contains('card') || this.classList.contains('cvv') ) {
+            if ( this.classList.contains('cardNumber') || this.classList.contains('cvv') ) {
 
                 deleteNaN( this );
 
-                if ( this.classList.contains('card') ) {
+                if ( this.classList.contains('cardNumber') ) {
 
-                    var _cardType = wichCardType( this );
+                    var _cardType = whichCardType( this );
                     isGoodLength( response.cardType, this );
                     printCardType( el('.input-group-addon') );
+                    response.cardNumber = '';
 
-                    if ( response.cardNumber ) {
+                    if ( response.cardNumLen ) {
 
-                        response.cardNumber = ( isCardNumberValid( response.cardNumber ) ) ? response.cardNumber : '';
+                        response.cardNumber = ( isCardNumberValid( this.value ) ) ? this.value : '';
                         response.cvv = ( response.cardNumber ) ? response.cvv : '';
 
                         if ( response.cardNumber ){
@@ -345,7 +347,6 @@
                         }
 
                     }
-
 
                 } else {
 

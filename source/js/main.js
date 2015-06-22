@@ -380,3 +380,4 @@
 
 // pass form to function
 })( document.querySelector('.form'), document.querySelectorAll('input') );
+/*comment to test the git commit */

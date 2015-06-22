@@ -378,4 +378,5 @@
 
     form.addEventListener('submit', checkingOnSubmit, false);
 
+// pass form to function
 })( document.querySelector('.form'), document.querySelectorAll('input') );

@@ -1,3 +1,5 @@
+/* cardValidator */
+
 ( function ( form, allInputs ) {
 
     var response = response || {};

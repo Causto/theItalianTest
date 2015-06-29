@@ -259,46 +259,63 @@
     /************ onsubmit *************/
     /***********************************/
 
-    var checkingOnSubmit = function(e) {
+    var checkingOnSubmit = function( e ) {
 
-        var _val = false;
+        // var _val = false;
 
         e.preventDefault();
 
-        /* check all the inputs values => if empty */
-        for (var i = 0; i < allInputs.length; i++) {
+        // /* check all the inputs values => if empty */
+        // for (var i = 0; i < allInputs.length; i++) {
 
-            var _i = allInputs[i];
+        //     var _i = allInputs[i];
 
-            if ( _i.value == '' ||  _i.value == null ) {
+        //     if ( _i.value == '' ||  _i.value == null ) {
 
-                _val = false;
+        //         _val = false;
 
-                isEmpty( _i, _val );
-            }
-        }
+        //         isEmpty( _i, _val );
+        //     }
+        // }
 
-        /* check value in response object */
-        for ( var prop in response ) {
+        // /* check value in response object */
+        // for ( var prop in response ) {
 
-            var _el = el( '.' + prop );
+        //     var _el = el( '.' + prop );
 
-            if ( _el ) {
+        //     if ( _el ) {
 
-                if ( !response[prop] ) {
+        //         if ( !response[prop] ) {
 
-                    _val = false;
+        //             _val = false;
 
-                    isEmpty( _el, _val  );
+        //             isEmpty( _el, _val  );
 
-                } else {
+        //         } else {
 
-                    _val = true;
+        //             _val = true;
 
-                    isEmpty( _el, _val );
-                }
-            }
-        }
+        //             isEmpty( _el, _val );
+        //         }
+        //     }
+        // }
+
+        // if ( _val ) {
+
+            var xhr = new XMLHttpRequest();
+
+            xhr.open('GET', 'js/mockTest.min.js', true);
+
+            xhr.onreadystatechange = function () {
+
+            if ( xhr.readyState != 4 || xhr.status != 200) return;
+
+                console.log('get : ', xhr.responseText);
+
+            };
+                xhr.send('foo');
+
+        //}
     }
 
     /***********************************/

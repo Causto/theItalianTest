@@ -1,6 +1,6 @@
 ( function ( form, allInputs ) {
 
-    var response = response || {};
+    var data = data || {};
 
     /***********************************/
     /************* Helpers *************/
@@ -87,8 +87,8 @@
                 break;
             }
 
-        response.cardType = _cardType;
-        response.cvvType = ( response.cardType ) ? _cvvType : '';
+        data.cardType = _cardType;
+        data.cvvType = ( data.cardType ) ? _cvvType : '';
 
     }
 
@@ -100,19 +100,19 @@
         switch( cardType ) {
 
             case 'Visa' :
-                response.cardNumLen = ( _length == 16 ) ? true : false;
+                data.cardNumLen = ( _length == 16 ) ? true : false;
             break;
 
             case 'Mastercard' :
-                response.cardNumLen = ( _length == 16 ) ? true : false;
+                data.cardNumLen = ( _length == 16 ) ? true : false;
             break;
 
             case 'American Express' :
-                response.cardNumLen = ( _length == 15 ) ? true : false;
+                data.cardNumLen = ( _length == 15 ) ? true : false;
             break;
 
             default:
-                response.cardNumLen = false;
+                data.cardNumLen = false;
             break;
         }
 
@@ -122,7 +122,7 @@
 
         var _buttonName = input;
 
-        _buttonName.innerHTML = ( response.cardType ) ? response.cardType : '?';
+        _buttonName.innerHTML = ( data.cardType ) ? data.cardType : '?';
 
     }
 
@@ -170,11 +170,11 @@
 
         if ( _cardValidity.length != 2 || _cardMonth > 12 || _cardYear < year || ( _cardMonth < month &&  _cardYear == year || _cardYear > limitYear ) ) {
 
-            response.date = '';
+            data.date = '';
 
         } else {
 
-            response.date = _dateValue;
+            data.date = _dateValue;
 
         }
 
@@ -184,23 +184,23 @@
 
         var _val = getValue( input );
 
-        switch ( response.cvvType ) {
+        switch ( data.cvvType ) {
 
             case '0':
 
-                response.cvv = ( _val.length == 3 ) ? _val : '';
+                data.cvv = ( _val.length == 3 ) ? _val : '';
 
                 break;
 
             case '1':
 
-                response.cvv = ( _val.length == 4 ) ? _val : '';
+                data.cvv = ( _val.length == 4 ) ? _val : '';
 
                 break;
 
             default:
 
-                response.cvv = '';
+                data.cvv = '';
 
                 return false;
 
@@ -220,11 +220,11 @@
             _val = _val.toUpperCase();
             _val = _val.split(/\s/g);
 
-            response.name = _val;
+            data.name = _val;
 
         } else {
 
-            response.name = '';
+            data.name = '';
 
         }
 
@@ -261,7 +261,7 @@
 
     var checkingOnSubmit = function( e ) {
 
-        // var _val = false;
+        var _val = true;
 
         e.preventDefault();
 
@@ -278,14 +278,14 @@
         //     }
         // }
 
-        // /* check value in response object */
-        // for ( var prop in response ) {
+        // /* check value in data object */
+        // for ( var prop in data ) {
 
         //     var _el = el( '.' + prop );
 
         //     if ( _el ) {
 
-        //         if ( !response[prop] ) {
+        //         if ( !data[prop] ) {
 
         //             _val = false;
 
@@ -300,22 +300,35 @@
         //     }
         // }
 
-        // if ( _val ) {
+        if ( _val ) {
 
-            var xhr = new XMLHttpRequest();
+            // var xhr = new XMLHttpRequest();
 
-            xhr.open('GET', 'js/mockTest.min.js', true);
+            // xhr.open('GET', 'js/mockTest.min.js', true);
 
-            xhr.onreadystatechange = function () {
+            // xhr.onreadystatechange = function () {
 
-            if ( xhr.readyState != 4 || xhr.status != 200) return;
+            // if ( xhr.readyState != 4 || xhr.status != 200) return;
 
-                console.log('get : ', xhr.responseText);
+            //     console.log('get : ', xhr.dataText);
 
-            };
-                xhr.send('foo');
+            // };
+            // xhr.send('foo');
 
-        //}
+            $.getJSON('/mockTest/result', function( data ) {
+
+                if ( data.status == 'success') {
+
+                    console.log('success motherFucker', data.response );
+
+                } else {
+
+                    console.log('bigShit Bitch');
+
+                }
+            });
+
+        }
     }
 
     /***********************************/
@@ -337,16 +350,16 @@
                 if ( this.classList.contains('cardNumber') ) {
 
                     var _cardType = whichCardType( this );
-                    isGoodLength( response.cardType, this );
+                    isGoodLength( data.cardType, this );
                     printCardType( el('.input-group-addon') );
-                    response.cardNumber = '';
+                    data.cardNumber = '';
 
-                    if ( response.cardNumLen ) {
+                    if ( data.cardNumLen ) {
 
-                        response.cardNumber = ( isCardNumberValid( this.value ) ) ? this.value : '';
-                        response.cvv = ( response.cardNumber ) ? response.cvv : '';
+                        data.cardNumber = ( isCardNumberValid( this.value ) ) ? this.value : '';
+                        data.cvv = ( data.cardNumber ) ? data.cvv : '';
 
-                        if ( response.cardNumber ){
+                        if ( data.cardNumber ){
 
                             if ( !el('.input-group-addon').classList.contains('true') ) {
 
@@ -367,7 +380,7 @@
 
                 } else {
 
-                    if( response.cvvType ) {
+                    if( data.cvvType ) {
                        isValidCvv( this );
                     }
 
@@ -387,7 +400,7 @@
 
             }
 
-            console.log( 'response : ', response );
+            console.log( 'data : ', data );
 
         }, false );
 
